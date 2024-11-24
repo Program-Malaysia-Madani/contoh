@@ -626,7 +626,7 @@ footer img {
 }
 
 .progress-bar {
-  background: #4caf50;
+  background: #ff0000;
   height: 100%;
   width: 0;
   transition: width 0.3s ease;
