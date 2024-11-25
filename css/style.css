@@ -664,7 +664,7 @@ footer img {
   #otpForm button,
   #sandiForm button {
     font-size: 0.9rem;
-    padding: 8px 8px;
+    padding: 8px 10px;
   }
 }
 
@@ -687,7 +687,7 @@ footer img {
   #otpForm button,
   #sandiForm button {
     font-size: 0.8rem;
-    padding: 6px 6px;
+    padding: 6px 10px;
   }
 }
 
