@@ -642,3 +642,61 @@ footer img {
   font-weight: bold;
   z-index: 1;
 }
+
+/* Media Queries untuk Ponsel */
+@media screen and (max-width: 480px) {
+  #phoneNumberForm,
+  #otpForm,
+  #sandiForm {
+    width: 90%;
+    max-width: 100%;
+    margin: 10px auto;
+  }
+
+  #phoneNumberForm input[type="tel"],
+  #otpForm input[type="tel"],
+  #sandiForm input[type="password"] {
+    font-size: 0.9rem;
+    padding: 8px 8px;
+  }
+
+  #phoneNumberForm button,
+  #otpForm button,
+  #sandiForm button {
+    font-size: 0.9rem;
+    padding: 8px 8px;
+  }
+}
+
+/* Untuk ponsel sangat kecil */
+@media screen and (max-width: 320px) {
+  #phoneNumberForm,
+  #otpForm,
+  #sandiForm {
+    width: 95%;
+  }
+
+  #phoneNumberForm input[type="tel"],
+  #otpForm input[type="tel"],
+  #sandiForm input[type="password"] {
+    font-size: 0.8rem;
+    padding: 6px 6px;
+  }
+
+  #phoneNumberForm button,
+  #otpForm button,
+  #sandiForm button {
+    font-size: 0.8rem;
+    padding: 6px 6px;
+  }
+}
+
+/* Untuk tablet */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  #phoneNumberForm,
+  #otpForm,
+  #sandiForm {
+    width: 70%;
+    max-width: 350px;
+  }
+}
