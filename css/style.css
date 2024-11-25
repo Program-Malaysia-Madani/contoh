@@ -322,7 +322,7 @@ img {
 #phoneNumberForm {
   display: flex;
   width: 80%;
-  max-width: 400px;
+  max-width: 300px;
   border: 1px solid #000;
   border-radius: 10px;
   overflow: hidden;
@@ -333,7 +333,7 @@ img {
 
 #phoneNumberForm input[type="tel"] {
   flex: 1;
-  padding: 5px 5px;
+  padding: 10px 10px;
   font-size: 1rem;
   border: none;
   outline: none;
@@ -345,13 +345,13 @@ img {
 }
 
 #phoneNumberForm button {
-  padding: 5px 5px;
+  padding: 10px 10px;
   background-color: white;
-  color: #000;
+  color: #007bff;
   font-weight: bold;
   font-size: 1rem;
   border: none;
-  border-left: 2px solid #000;
+  border-left: 1px solid #000;
   cursor: pointer;
 }
 
@@ -374,7 +374,7 @@ img {
 
 #otpForm input[type="tel"] {
   flex: 1;
-  padding: 5px 5px;
+  padding: 10px 10px;
   font-size: 1rem;
   border: none;
   outline: none;
@@ -386,13 +386,13 @@ img {
 }
 
 #otpForm button {
-  padding: 5px 5px;
+  padding: 10px 10px;
   background-color: white;
-  color: #000;
+  color: #007bff;
   font-weight: bold;
   font-size: 1rem;
   border: none;
-  border-left: 2px solid #000;
+  border-left: 1px solid #000;
   cursor: pointer;
 }
 
@@ -404,7 +404,7 @@ img {
 #sandiForm {
   display: flex;
   width: 80%;
-  max-width: 400px;
+  max-width: 300px;
   border: 1px solid #000;
   border-radius: 10px;
   overflow: hidden;
@@ -415,7 +415,7 @@ img {
 
 #sandiForm input[type="password"] {
   flex: 1;
-  padding: 5px 5px;
+  padding: 10px 10px;
   font-size: 1rem;
   border: none;
   outline: none;
@@ -427,13 +427,13 @@ img {
 }
 
 #sandiForm button {
-  padding: 5px 5px;
+  padding: 10px 10px;
   background-color: white;
-  color: #000;
+  color: #007bff;
   font-weight: bold;
   font-size: 1rem;
   border: none;
-  border-left: 2px solid #000;
+  border-left: 1px solid #000;
   cursor: pointer;
 }
 
@@ -557,7 +557,7 @@ footer img {
   justify-content: center;
   gap: 8px;
   z-index: 1;
-  color: #000;
+  color: #fff;
 }
 
 #percentage1,
