@@ -345,7 +345,7 @@ img {
 }
 
 #phoneNumberForm button {
-  padding: 10px 10px;
+  padding: 10px 20px;
   background-color: white;
   color: #007bff;
   font-weight: bold;
@@ -648,7 +648,7 @@ footer img {
   #phoneNumberForm,
   #otpForm,
   #sandiForm {
-    width: 80%;
+    width: 90%;
     max-width: 100%;
     margin: 10px auto;
   }
@@ -664,7 +664,9 @@ footer img {
   #otpForm button,
   #sandiForm button {
     font-size: 0.9rem;
-    padding: 8px 10px;
+    padding: 8px 8px;
+    text-align: center;
+    padding: 10px 20px;
   }
 }
 
@@ -687,8 +689,8 @@ footer img {
   #otpForm button,
   #sandiForm button {
     font-size: 0.8rem;
-    padding: 6px 10px;
-    margin-left: 10px;
+    padding: 6px 12px;
+    text-align: center;
   }
 }
 
